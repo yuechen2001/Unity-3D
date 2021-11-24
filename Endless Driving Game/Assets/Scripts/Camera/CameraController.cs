@@ -19,6 +19,7 @@ public class CameraController : MonoBehaviour
     }
 
     void Update() {
+        // Toggles between FPS camera and Overhead camera 
         if (firstPersonCamera.activeInHierarchy) {
             if (Input.GetButtonDown("Switch" + inputID)) 
             {

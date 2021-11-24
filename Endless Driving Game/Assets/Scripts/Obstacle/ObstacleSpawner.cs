@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CoinSpawner : MonoBehaviour
+public class ObstacleSpawner : MonoBehaviour
 {
-    public GameObject coinPrefab;
+    public List<GameObject> obstaclePrefabs; 
     private Vector3 offset; 
-    private Vector3 position = new Vector3(1.1f, 3, 10);
-    private float spawnTime = 0.5f; 
+    private Vector3 position = new Vector3(-2.5f, -1.761234f, 100);
+    private float spawnTime = 1.5f; 
     private float timer = 0; 
     // Start is called before the first frame update
     void Start()
@@ -18,19 +18,20 @@ public class CoinSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Spawn a random coin every few seconds 
+        // spawn a random obstacle every few seconds 
         if (timer > spawnTime)
         {
-            offset = new Vector3(Random.Range(-18, 18), 0, 30);
+            offset = new Vector3(Random.Range(-10, 10), 0, 10);
             position = position + offset; 
+            int rand = Random.Range(0, obstaclePrefabs.Count);
 
-            GameObject obs = Instantiate(coinPrefab);
+            GameObject obs = Instantiate(obstaclePrefabs[rand]);
             obs.transform.position = position;
             timer = 0;
             Destroy(obs, 60);
             position.x = -2.5f; 
         }
-
+        
         timer += Time.deltaTime;
     }
 }

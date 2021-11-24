@@ -17,6 +17,7 @@ public class SpawnManager : MonoBehaviour
 
     }
 
+    // Shifts road to next location once player drives past it 
     public void SpawnTriggerEntered()
     {
         roadSpawner.MoveRoad(); 
