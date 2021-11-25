@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
+    // On-click functions for Main Menu
     public void PlayGame()
     {
         SceneManager.LoadScene("PlayState");

@@ -6,7 +6,7 @@ public class CoinSpawner : MonoBehaviour
 {
     public GameObject coinPrefab;
     private Vector3 offset; 
-    private Vector3 position = new Vector3(1.1f, 3, 10);
+    private Vector3 position = new Vector3(1.1f, 0, 10);
     private float spawnTime = 0.5f; 
     private float timer = 0; 
     // Start is called before the first frame update
@@ -21,7 +21,7 @@ public class CoinSpawner : MonoBehaviour
         // Spawn a random coin every few seconds 
         if (timer > spawnTime)
         {
-            offset = new Vector3(Random.Range(-18, 18), 0, 30);
+            offset = new Vector3(Random.Range(-13, 17), 0, 30);
             position = position + offset; 
 
             GameObject obs = Instantiate(coinPrefab);

@@ -26,7 +26,6 @@ public class CoinCollision : MonoBehaviour
         FindObjectOfType<AudioManager>().PlaySound("Pick Up Coin");
         // Add to score 
         PlayerController.numberofCoins += 1; 
-        Debug.Log("Coins:" + PlayerController.numberofCoins);
         // Destroy Coin
         Destroy(gameObject);
     }

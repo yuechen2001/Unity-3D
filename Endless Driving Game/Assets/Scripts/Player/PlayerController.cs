@@ -4,9 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
-{
-    public SpawnManager spawnManager;
-    public GameObject player;  
+{ 
     private float speed = 20.0f; 
     private float turnSpeed = 45.0f;
     private float horizontalInput; 
@@ -15,6 +13,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     { 
+        // Reset player score 
         numberofCoins= 0; 
     }
 
@@ -28,20 +27,6 @@ public class PlayerController : MonoBehaviour
         transform.Rotate(Vector3.up, turnSpeed * horizontalInput * Time.deltaTime);
         // Display player's score on top right corner
         score.text = "Score: " + numberofCoins; 
-
-        // Trigger Game Over screen when player falls off the road 
-        if (gameObject.transform.position.y > -100)
-        {
-            PlayerManager.gameOver = true; 
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "SpawnTrigger")
-        {
-            spawnManager.SpawnTriggerEntered();
-        }
     }
 
     private void OnCollisionEnter(Collision hit)

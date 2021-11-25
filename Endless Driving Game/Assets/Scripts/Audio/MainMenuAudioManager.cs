@@ -8,6 +8,7 @@ public class MainMenuAudioManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Allow Audio Manager to be the only AudioSource for all sounds in game 
         foreach(Sound s in sounds)
         {
             s.source = gameObject.AddComponent<AudioSource>();

@@ -14,6 +14,7 @@ public class EnemyMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Allow enemy vehicles to travel towards player 
         transform.Translate(Vector3.forward * Time.deltaTime * speed); 
     }
 }

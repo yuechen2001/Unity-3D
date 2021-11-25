@@ -18,6 +18,12 @@ public class CameraController : MonoBehaviour
         overheadCamera.SetActive(false); 
     }
 
+    void Start()
+    {
+        firstPersonCamera.SetActive(false); 
+        overheadCamera.SetActive(true); 
+    }
+
     void Update() {
         // Toggles between FPS camera and Overhead camera 
         if (firstPersonCamera.activeInHierarchy) {
