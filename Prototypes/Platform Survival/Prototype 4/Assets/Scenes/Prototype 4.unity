@@ -271,6 +271,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 23541399822167384, guid: 923deea38dc6a8843b15db7638919c1e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9e06209d219644e1a8caa7a17a982e92, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 923deea38dc6a8843b15db7638919c1e, type: 3}
 --- !u!1 &661721624
@@ -326,7 +330,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e4fce0088e0fc8e499a04f4307aac95b, type: 2}
+  - {fileID: 2100000, guid: e6e6f7a3c9f4839409af1eae15839382, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -382,8 +386,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01e59c0d738655445ad090d12cf638ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPowerup: 0
   powerupIndicator: {fileID: 839244104}
-  speed: 5
+  rocketPrefab: {fileID: 7501178343254746730, guid: f4af494c8b4a52a47a243d84779df48c, type: 3}
 --- !u!54 &661721630
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -478,8 +483,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40a80bf0620f1a04295fc543de87fc71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 8333896282372638642, guid: 10ef547500aa8304fb0d20158526432d, type: 3}
-  powerupPrefab: {fileID: 7042480438587563764, guid: 855a8d02ed842414da50b4fdffdc0ecf, type: 3}
+  enemyprefabs:
+  - {fileID: 8333896282372638642, guid: 75f8c5f73d7d05d448547a9ea22ec7f5, type: 3}
+  - {fileID: 8333896282372638642, guid: 10ef547500aa8304fb0d20158526432d, type: 3}
+  powerupPrefabs:
+  - {fileID: 7042480438587563764, guid: 69fb8092d760bcf44963c3b3ba01d35f, type: 3}
+  - {fileID: 7042480438587563764, guid: c826c4a445d571949a8eb82bd2e88207, type: 3}
+  - {fileID: 7042480438587563764, guid: 855a8d02ed842414da50b4fdffdc0ecf, type: 3}
+  miniEnemiesPrefab:
+  - {fileID: 8333896282372638642, guid: 75f8c5f73d7d05d448547a9ea22ec7f5, type: 3}
+  - {fileID: 8333896282372638642, guid: 10ef547500aa8304fb0d20158526432d, type: 3}
+  bossPrefab: {fileID: 6497927408410875253, guid: 1f15e950b63253a4abe109ff09612b98, type: 3}
+  waveNumber: 1
 --- !u!4 &862930066
 Transform:
   m_ObjectHideFlags: 0
