@@ -6,7 +6,8 @@ public class BulletsController : MonoBehaviour
 {
     public WeaponsInventory inventory;
     public float bulletSpeed;
-    public float bulletRange; 
+    public float bulletRange;
+    public int bulletDamage = 1; 
 
     // Start is called before the first frame update
     void Start()
@@ -19,5 +20,15 @@ public class BulletsController : MonoBehaviour
     void Update()
     {
         transform.Translate(Vector3.right * bulletSpeed * Time.deltaTime);
+    }
+
+    // When a bullet collides with enemy, damage enemy. Destroy bullet after collision 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            collision.gameObject.GetComponent<EnemyHealthManager>().HurtEnemy(bulletDamage);
+            Destroy(gameObject); 
+        }
     }
 }

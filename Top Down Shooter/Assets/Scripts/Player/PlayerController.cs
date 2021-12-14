@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
     public Camera mainCamera; 
     private Rigidbody playerRb;
 
-    private float playerSpeed = 0.2f;
+    private float playerSpeed = 15f;
     private float playingFieldRange = 75;
 
     private GunController gun; 
@@ -25,9 +25,9 @@ public class PlayerController : MonoBehaviour
         // Player movement 
         RestrictPlayingArea();
         float horizontalInput = Input.GetAxis("Horizontal");
-        transform.Translate(Vector3.right * horizontalInput * playerSpeed);
+        transform.Translate(Vector3.right * horizontalInput * playerSpeed * Time.deltaTime);
         float verticalInput = Input.GetAxis("Vertical");
-        transform.Translate(Vector3.forward * verticalInput * playerSpeed);
+        transform.Translate(Vector3.forward * verticalInput * playerSpeed * Time.deltaTime);
 
         // Using the mouse as an aiming point 
         Ray cameraRay = mainCamera.ScreenPointToRay(Input.mousePosition);
@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
             transform.LookAt(new Vector3 (pointToLook.x, transform.position.y, pointToLook.z));
         }
 
-        // Player can fire with left mouse-button. Releasing the button pauses the firing
+        // Player can fire with left mouse-button. Releasing the button stops the firing
         if (Input.GetMouseButtonDown(0))
         {
             gun.isFiring = true;
