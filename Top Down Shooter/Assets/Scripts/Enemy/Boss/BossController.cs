@@ -1,0 +1,50 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class BossController : MonoBehaviour
+{
+    private Rigidbody bossRB;
+    private PlayerController player;
+    public GameObject bossOrb;
+    public Transform orbSpawnPoint; 
+
+    private float moveSpeed = 2.5f;
+    private float distanceToPlayer = 30f;
+
+    private float shotTimer;
+    private float shotInterval = 3.0f; 
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        bossRB = GetComponent<Rigidbody>();
+        player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        // Boss to follow player, but stays at a certain distance
+        transform.LookAt(player.transform.position);
+        float range = Vector3.Distance(transform.position, player.transform.position);
+        if (range > distanceToPlayer)
+        {
+            transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+        }
+
+        // Fire orb at player at regular intervals 
+        shotTimer += Time.deltaTime; 
+        if (shotTimer > shotInterval)
+        {
+            shotTimer = 0; 
+            FireOrb();
+        }
+    }
+
+    // Fire orbs which damages the player and knocks player back 
+    private void FireOrb()
+    {
+        Instantiate(bossOrb, orbSpawnPoint.position, bossOrb.transform.rotation); 
+    }
+}

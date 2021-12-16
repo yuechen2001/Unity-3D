@@ -9,6 +9,7 @@ TagManager:
   - Machine Gun Ammo
   - Enemy
   - Bullet
+  - Ground
   layers:
   - Default
   - TransparentFX
