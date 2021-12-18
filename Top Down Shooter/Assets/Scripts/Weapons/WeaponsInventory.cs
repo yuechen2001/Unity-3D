@@ -13,7 +13,7 @@ public class WeaponsInventory : MonoBehaviour
     private float shotTimer;
 
     // Weapon range
-    private float shotgunRange = 0.2f;
+    private float shotgunRange = 0.4f;
     private float pistolRange = 1;
     private float machineGunRange = 2; 
 
@@ -89,7 +89,7 @@ public class WeaponsInventory : MonoBehaviour
             if (shotTimer > shotInterval)
             {
                 shotTimer = 0;
-                int initialRotation = -45;
+                int initialRotation = -30;
                 for (int i = 0; i < pelletsPerBurst; i++)
                 {
                     GameObject newBullet = Instantiate(bullet, firePoint.position, firePoint.rotation);
@@ -97,7 +97,7 @@ public class WeaponsInventory : MonoBehaviour
                     
                     // Destroy pellets beyond shot
                     Destroy(newBullet, shotgunRange);
-                    initialRotation += 15;
+                    initialRotation += 10;
                 }
 
                 // Account for ammo 

@@ -10,7 +10,8 @@ public class AmmoBoxSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        spawnTimer = 0; 
+        spawnTimer = 0;
+        SpawnAmmoBox(3); 
     }
 
     // Update is called once per frame
@@ -22,8 +23,7 @@ public class AmmoBoxSpawner : MonoBehaviour
         // Spawn an ammo box every 60s. Limit the total number to 5
         if (spawnTimer > spawnInterval && ammoBoxCount < 5)
         {
-            int random = Random.Range(0, ammoPrefabs.Length);
-            Instantiate(ammoPrefabs[random], GenerateSpawnPosition(), ammoPrefabs[random].transform.rotation);
+            SpawnAmmoBox(1); 
         }
     }
 
@@ -32,7 +32,17 @@ public class AmmoBoxSpawner : MonoBehaviour
     {
         float xPosition = Random.Range(-70, 71);
         float zPosition = Random.Range(-70, 71);
-        Vector3 spawnPoint = new Vector3(xPosition, 0, zPosition);
+        Vector3 spawnPoint = new Vector3(xPosition, 2, zPosition);
         return spawnPoint; 
+    }
+
+    // Spawn ammo box 
+    private void SpawnAmmoBox(int numberToSpawn)
+    {
+        for (int i = 0; i < numberToSpawn; i++)
+        {
+            int random = Random.Range(0, ammoPrefabs.Length);
+            Instantiate(ammoPrefabs[random], GenerateSpawnPosition(), ammoPrefabs[random].transform.rotation);
+        }
     }
 }

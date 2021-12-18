@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 8038318217387054919}
   - component: {fileID: 185414713789868184}
   - component: {fileID: 2783550888793428341}
-  - component: {fileID: -7515411214828317906}
+  - component: {fileID: -6700813682509886941}
   m_Layer: 0
   m_Name: Boss Orb
-  m_TagString: Untagged
+  m_TagString: Boss Orb
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -96,7 +96,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-7515411214828317906
+--- !u!114 &-6700813682509886941
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

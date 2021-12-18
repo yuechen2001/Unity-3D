@@ -25,8 +25,8 @@ public class BossController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Boss to follow player, but stays at a certain distance
-        transform.LookAt(player.transform.position);
+        // Boss looks in the direction of player and follows player to a certain distance
+        transform.LookAt(new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z));
         float range = Vector3.Distance(transform.position, player.transform.position);
         if (range > distanceToPlayer)
         {
@@ -34,10 +34,10 @@ public class BossController : MonoBehaviour
         }
 
         // Fire orb at player at regular intervals 
-        shotTimer += Time.deltaTime; 
+        shotTimer += Time.deltaTime;
         if (shotTimer > shotInterval)
         {
-            shotTimer = 0; 
+            shotTimer = 0;
             FireOrb();
         }
     }
@@ -45,6 +45,6 @@ public class BossController : MonoBehaviour
     // Fire orbs which damages the player and knocks player back 
     private void FireOrb()
     {
-        Instantiate(bossOrb, orbSpawnPoint.position, bossOrb.transform.rotation); 
+        Instantiate(bossOrb, orbSpawnPoint.position, bossOrb.transform.rotation);
     }
 }

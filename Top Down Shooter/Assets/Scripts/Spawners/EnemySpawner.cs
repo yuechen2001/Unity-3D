@@ -9,31 +9,44 @@ public class EnemySpawner : MonoBehaviour
 
     private int bossRound = 5;
     private int enemyCount; 
-    public int waveNumber = 1; 
+    private int waveNumber = 4;
+
+    private float bossYOffset = 5;
+    private float enemyYOffset = 2; 
 
     // Start is called before the first frame update
     void Start()
     {
-        SpawnEnemyWave(waveNumber + 9); 
+        SpawnEnemyWave(waveNumber );
+        SpawnBoss(); 
     }
 
     // Update is called once per frame
     void Update()
     {
-        enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length; 
+        enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length + GameObject.FindGameObjectsWithTag("Boss").Length;
         // Spawn more enemies if none are left. Increase number of enemies by waves
         if (enemyCount == 0)
         {
             waveNumber++;
-            SpawnEnemyWave(waveNumber + 9); 
-        }
 
+            // Spawn a boss every x number of waves 
+            if (waveNumber % bossRound == 0)
+            {
+                SpawnBoss();
+                SpawnEnemyWave(waveNumber + 9); 
+            }
+            else
+            {
+                SpawnEnemyWave(waveNumber + 9);
+            }
+        }
     }
 
     // Generate spawn positions for enemies and bosses
-    private Vector3 GenerateSpawnPosition()
+    private Vector3 GenerateSpawnPosition(bool isBoss)
     {
-        int random = Random.Range(1, 3); 
+        int random = Random.Range(1, 3);
         if (random == 1)
         {
             // Generate x-position 
@@ -45,8 +58,16 @@ public class EnemySpawner : MonoBehaviour
             float zPosition = Random.Range(-140, 141);
 
             // Generate spawn position 
-            Vector3 spawnPoint = new Vector3(xPosition, 0, zPosition);
-            return spawnPoint;
+            if (isBoss)
+            {
+                Vector3 spawnPoint = new Vector3(xPosition, bossYOffset, zPosition);
+                return spawnPoint;
+            }
+            else
+            {
+                Vector3 spawnPoint = new Vector3(xPosition, enemyYOffset, zPosition);
+                return spawnPoint;
+            }
         }
 
         else
@@ -60,18 +81,32 @@ public class EnemySpawner : MonoBehaviour
             float xPosition = Random.Range(-140, 141);
 
             // Generate spawn position 
-            Vector3 spawnPoint = new Vector3(xPosition, 0, zPosition);
-            return spawnPoint;
+            if (isBoss)
+            {
+                Vector3 spawnPoint = new Vector3(xPosition, bossYOffset, zPosition);
+                return spawnPoint;
+            }
+            else
+            {
+                Vector3 spawnPoint = new Vector3(xPosition, enemyYOffset, zPosition);
+                return spawnPoint;
+            }
         }
     }
 
-    // Spawn enemies in waves 
-    private void SpawnEnemyWave(int enemiesToSpawn)
+        // Spawn enemies in waves 
+        private void SpawnEnemyWave(int enemiesToSpawn)
     {
         for (int i = 0; i < enemiesToSpawn; i++)
         {
             int randomEnemy = Random.Range(0, enemyPrefabs.Length);
-            Instantiate(enemyPrefabs[randomEnemy], GenerateSpawnPosition(), enemyPrefabs[randomEnemy].transform.rotation); 
+            Instantiate(enemyPrefabs[randomEnemy], GenerateSpawnPosition(false), enemyPrefabs[randomEnemy].transform.rotation); 
         }
+    }
+
+    // Spawn boss wave 
+    private void SpawnBoss()
+    {
+        Instantiate(bossPrefab, GenerateSpawnPosition(true), bossPrefab.transform.rotation); 
     }
 }

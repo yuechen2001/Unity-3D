@@ -10,6 +10,8 @@ TagManager:
   - Enemy
   - Bullet
   - Ground
+  - Boss
+  - Boss Orb
   layers:
   - Default
   - TransparentFX
