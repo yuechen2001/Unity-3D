@@ -11,7 +11,7 @@ public class OrbMovement : MonoBehaviour
 
     private float speed = 20.0f;
     private int damageToGive = 2;
-    private float explosiveForce = 100.0f;
+    private float explosiveForce = 200.0f;
     private float orbLifespan = 5.0f;
 
     // Start is called before the first frame update

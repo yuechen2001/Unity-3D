@@ -1,15 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerHealthManager : MonoBehaviour
 {
-    private int maxHealth = 10; 
-    private int currentHealth;
+    public Slider playerHealthBar; 
+    private int maxHealth = 10;
+    private int currentHealth; 
+    private int damageTaken;
+
+    private int healthRecovered = 2; 
     
     private Renderer rend;
     private Color storedColour;
-
     private float flashLength = 0.25f; 
     private float flashTimer;
 
@@ -17,7 +21,14 @@ public class PlayerHealthManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        currentHealth = maxHealth;
+        currentHealth = maxHealth; 
+
+        // Slider to show player health
+        playerHealthBar.maxValue = maxHealth;
+        damageTaken = 0;
+        playerHealthBar.fillRect.gameObject.SetActive(false); 
+
+        // Configure player flashing when taking damage 
         rend = GetComponent<Renderer>();
         storedColour = rend.material.GetColor("_Color"); 
     }
@@ -25,11 +36,6 @@ public class PlayerHealthManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (currentHealth <= 0)
-        {
-            gameObject.SetActive(false); 
-        }
-
         // Player flashes when taking damage 
         if (flashTimer > 0)
         {
@@ -45,7 +51,44 @@ public class PlayerHealthManager : MonoBehaviour
     public void HurtPlayer(int damage)
     {
         currentHealth -= damage;
+        HurtPlayerHealthBar(damage); 
+
+        // Player flashes when taking damage
         flashTimer = flashLength;
         rend.material.SetColor("_Color", Color.white);
     }
+
+    // Reflect damage taken by enemy on healthbar
+    public void HurtPlayerHealthBar(int amount)
+    {
+        damageTaken += amount;
+        playerHealthBar.fillRect.gameObject.SetActive(true);
+        playerHealthBar.value = damageTaken;
+
+        if (damageTaken >= maxHealth)
+        {
+            gameObject.SetActive(false); 
+        }
+    }
+    
+    // Increase player health if he picks up a health pickup
+    public void RecoverHealth()
+    {
+        currentHealth += healthRecovered;
+        damageTaken -= healthRecovered;
+        playerHealthBar.value = damageTaken;
+
+        // Prevent player from overhealing 
+        if (currentHealth > maxHealth && damageTaken < 0)
+        {
+            currentHealth = maxHealth;
+            damageTaken = 0;
+        }
+
+        if (currentHealth == maxHealth && damageTaken == 0)
+        {
+            playerHealthBar.fillRect.gameObject.SetActive(false); 
+        }
+    }
+
 }

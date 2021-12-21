@@ -1,31 +1,58 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI; 
 
 public class EnemyHealthManager : MonoBehaviour
 {
-    public int health;
+    private EnemyLootDrop enemyLootDrop;
+
+    public Slider enemyHealthBar;
     private int currentHealth; 
+    public int maxHealth;
+    private int damageTaken;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        currentHealth = health;    
+        enemyLootDrop = GetComponent<EnemyLootDrop>(); 
+        currentHealth = maxHealth; 
+
+        // Slider to show enemy health 
+        enemyHealthBar.maxValue = maxHealth;
+        damageTaken = 0;
+        enemyHealthBar.fillRect.gameObject.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
+    // Allow player to deal damage with weapons. Destroy enemy if no more health 
+    public void HurtEnemy(int damage)
     {
-        // Destroy enemy if enemy has no more health
-        if (currentHealth <= 0)
+        currentHealth -= damage; 
+        HurtEnemyHealthBar(damage);
+
+        if (damageTaken >= maxHealth)
         {
+            if (gameObject.CompareTag("Enemy"))
+            {
+                // Enemy has a chance of dropping loot when killed
+                enemyLootDrop.DropLoot();
+            }
+            else if (gameObject.CompareTag("Boss"))
+            {
+                enemyLootDrop.DropLoot(); 
+            }
+
             Destroy(gameObject); 
         }
     }
 
-    // Allows player to deal damage with weapons
-    public void HurtEnemy(int damage)
+    // Reflect damage taken by enemy on healthbar
+    public void HurtEnemyHealthBar(int amount)
     {
-        currentHealth -= damage; 
+        damageTaken += amount;
+        enemyHealthBar.fillRect.gameObject.SetActive(true);
+        enemyHealthBar.value = damageTaken;
     }
+
 }

@@ -12,6 +12,7 @@ TagManager:
   - Ground
   - Boss
   - Boss Orb
+  - Powerup
   layers:
   - Default
   - TransparentFX

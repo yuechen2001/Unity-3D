@@ -17,7 +17,7 @@ public class EnemySpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SpawnEnemyWave(waveNumber );
+        SpawnEnemyWave(waveNumber);
         SpawnBoss(); 
     }
 
@@ -25,6 +25,7 @@ public class EnemySpawner : MonoBehaviour
     void Update()
     {
         enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length + GameObject.FindGameObjectsWithTag("Boss").Length;
+        
         // Spawn more enemies if none are left. Increase number of enemies by waves
         if (enemyCount == 0)
         {
@@ -94,19 +95,19 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-        // Spawn enemies in waves 
-        private void SpawnEnemyWave(int enemiesToSpawn)
+    // Spawn enemies in waves 
+    private void SpawnEnemyWave(int enemiesToSpawn)
     {
-        for (int i = 0; i < enemiesToSpawn; i++)
+    for (int i = 0; i < enemiesToSpawn; i++)
         {
             int randomEnemy = Random.Range(0, enemyPrefabs.Length);
-            Instantiate(enemyPrefabs[randomEnemy], GenerateSpawnPosition(false), enemyPrefabs[randomEnemy].transform.rotation); 
+            var enemy = Instantiate(enemyPrefabs[randomEnemy], GenerateSpawnPosition(false), enemyPrefabs[randomEnemy].transform.rotation); 
         }
     }
 
     // Spawn boss wave 
     private void SpawnBoss()
     {
-        Instantiate(bossPrefab, GenerateSpawnPosition(true), bossPrefab.transform.rotation); 
+        var boss = Instantiate(bossPrefab, GenerateSpawnPosition(true), bossPrefab.transform.rotation); 
     }
 }
