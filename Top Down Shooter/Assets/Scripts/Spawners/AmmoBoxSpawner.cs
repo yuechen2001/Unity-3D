@@ -7,6 +7,7 @@ public class AmmoBoxSpawner : MonoBehaviour
     public GameObject[] ammoPrefabs;
     private float spawnTimer;
     private float spawnInterval = 60; 
+
     // Start is called before the first frame update
     void Start()
     {

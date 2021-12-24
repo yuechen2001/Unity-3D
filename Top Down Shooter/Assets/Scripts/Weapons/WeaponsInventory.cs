@@ -108,7 +108,7 @@ public class WeaponsInventory : MonoBehaviour
         }
     }
 
-    // Method to refill ammo after picking up ammo boxes 
+    // Refill ammo after picking up ammo boxes 
     public void ResupplyAmmo(string ammoType)
     {
         Debug.Log(ammoType + " ammo refilled!"); 

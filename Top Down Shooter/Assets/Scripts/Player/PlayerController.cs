@@ -6,19 +6,24 @@ public class PlayerController : MonoBehaviour
 {
     public PowerUpType currentPowerup = PowerUpType.None;
     public GameObject powerupIndicator;
+    public Camera mainCamera;
+    private Rigidbody playerRb;
+    private GunController gun;
+
+    // Rocket powerup 
+    public GameObject rocketPrefab;
+    private GameObject tmpRocket;
 
     // Smash powerup 
     private float hangTime = 1;
     private float smashSpeed = 10;
-    private float explosionForce = 100;
+    private int smashDamage = 4; 
+    private float explosionForce = 10;
     private float explosionRadius = 20;
     private bool smashing = false;
     private float floorY;
-
-    public Camera mainCamera; 
-    private Rigidbody playerRb;
-    private GunController gun;
-
+    
+    // Player stats
     private float playerSpeed = 15f;
     private float playingFieldRange = 75;
 
@@ -32,7 +37,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Player movement 
+        // Player movement. Prevent player from walking off the map 
         RestrictPlayingArea();
         float horizontalInput = Input.GetAxis("Horizontal");
         transform.Translate(Vector3.right * horizontalInput * playerSpeed * Time.deltaTime);
@@ -61,21 +66,28 @@ public class PlayerController : MonoBehaviour
             gun.isFiring = false; 
         }
 
-        // Have the powerup indicator of the player follow him 
-        powerupIndicator.transform.position = transform.position + new Vector3(0, 1, 0); 
-
         // If player has powerup, allow player to use powerup upon button press
         if (currentPowerup == PowerUpType.Rockets && Input.GetKeyDown(KeyCode.F))
         {
             LaunchRockets();
         }
 
-        if (currentPowerup == PowerUpType.Smash && Input.GetKeyDown(KeyCode.Space))
+        if (currentPowerup == PowerUpType.Smash && Input.GetKeyDown(KeyCode.Space) && !smashing)
         {
             smashing = true;
             StartCoroutine(Smash()); 
         }
+    }
 
+    // Consume powerup if player collides with it 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Powerup"))
+        {
+            currentPowerup = other.gameObject.GetComponent<PowerUp>().powerUpType;
+            Destroy(other.gameObject);
+            powerupIndicator.gameObject.SetActive(true); 
+        }
     }
 
     // Prevent player from moving off the platform 
@@ -97,6 +109,33 @@ public class PlayerController : MonoBehaviour
         {
             transform.position = new Vector3(transform.position.x, transform.position.y, -playingFieldRange);
         }
+    }
+
+    // Reset player's powerup status 
+    private void RemovePowerupStatus()
+    {
+        currentPowerup = PowerUpType.None;
+        powerupIndicator.gameObject.SetActive(false); 
+    }
+
+    // Player launches homing rockets at enemies and boss
+    private void LaunchRockets()
+    {
+        // Fire at enemies 
+        foreach(var enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+        {
+            tmpRocket = Instantiate(rocketPrefab, transform.position, rocketPrefab.transform.rotation);
+            tmpRocket.GetComponent<RocketBehaviour>().Fire(enemy.transform);
+        }
+        
+        // Fire at boss
+        if (GameObject.FindGameObjectWithTag("Boss") != null )
+        {
+            tmpRocket = Instantiate(rocketPrefab, transform.position, rocketPrefab.transform.rotation);
+            tmpRocket.GetComponent<RocketBehaviour>().Fire(GameObject.FindGameObjectWithTag("Boss").transform);
+        }
+
+        RemovePowerupStatus(); 
     }
 
     IEnumerator Smash()
@@ -124,24 +163,34 @@ public class PlayerController : MonoBehaviour
             yield return null;
         }
 
-        // Cycle through all enemies 
         for (int i = 0; i < enemies.Length; i++)
         {
-            // Apply an explosion force that originates from player position 
+            // Apply an explosion force that originates from player position. Deal damage only if enemy/boss within explosiveRadius
             if (enemies[i] != null)
             {
                 enemies[i].GetComponent<Rigidbody>().AddExplosionForce(explosionForce, transform.position, explosionRadius, 0.0f, ForceMode.Impulse);
+                float range = Vector3.Distance(transform.position, enemies[i].transform.position); 
+                if (range < explosionRadius)
+                {
+                    enemies[i].GetComponent<EnemyHealthManager>().HurtEnemy(smashDamage);
+                }
             }
-
-            if (boss != null)
-            {
-                boss.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, transform.position, explosionRadius, 0.0f, ForceMode.Impulse);
-            }
-
-            // Set smashing to false 
-            smashing = false;
-            powerupIndicator.SetActive(false);
         }
-    }
 
+        if (boss != null)
+        {
+            boss.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, transform.position, explosionRadius, 0.0f, ForceMode.Impulse);
+            float range = Vector3.Distance(transform.position, boss.transform.position);
+            if (range < explosionRadius)
+            {
+                boss.GetComponent<EnemyHealthManager>().HurtEnemy(smashDamage);
+            }
+        }
+
+        // Set smashing to false 
+        smashing = false;
+        RemovePowerupStatus(); 
+    }
 }
+
+

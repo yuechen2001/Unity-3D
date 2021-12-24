@@ -9,10 +9,11 @@ public class OrbMovement : MonoBehaviour
     private Rigidbody playerRb;
     private Rigidbody orbRb; 
 
+    // Orb stats 
     private float speed = 20.0f;
-    private int damageToGive = 2;
     private float explosiveForce = 200.0f;
     private float orbLifespan = 5.0f;
+    private int damageToGive = 2;
 
     // Start is called before the first frame update
     void Start()
@@ -29,6 +30,7 @@ public class OrbMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Orb travels towards the direction the boss is facing 
         if (boss == null)
         {
             Destroy(gameObject); 
@@ -37,12 +39,17 @@ public class OrbMovement : MonoBehaviour
         {
             transform.Translate(boss.transform.forward * speed * Time.deltaTime);
         }
-
     }
 
-    // When hit player, explode and deal damage 
+    // When hit player or enemy, knockback and deal damage 
     public void OnCollisionEnter(Collision collision)
     {
+        // If orb hits the ground, destroy it
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            Destroy(gameObject);
+        }
+
         if (collision.gameObject.CompareTag("Player"))
         {
             collision.gameObject.GetComponent<PlayerHealthManager>().HurtPlayer(damageToGive);
@@ -50,13 +57,6 @@ public class OrbMovement : MonoBehaviour
             Destroy(gameObject);
         }
 
-        // If orb hits the ground, destroy it
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            Destroy(gameObject);
-        }
-
-        // Boss does friendly damage to enemies 
         if (collision.gameObject.CompareTag("Enemy"))
         {
             collision.gameObject.GetComponent<EnemyHealthManager>().HurtEnemy(damageToGive);

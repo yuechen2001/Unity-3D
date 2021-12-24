@@ -1,25 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI; 
+using UnityEngine.UI;
 
 public class EnemyHealthManager : MonoBehaviour
 {
     private EnemyLootDrop enemyLootDrop;
 
+    // Enemy healthbar stats 
     public Slider enemyHealthBar;
-    private int currentHealth; 
-    public int maxHealth;
     private int damageTaken;
-
+    public int currentHealth;
+    public int maxHealth;
 
     // Start is called before the first frame update
     void Start()
     {
-        enemyLootDrop = GetComponent<EnemyLootDrop>(); 
-        currentHealth = maxHealth; 
+        enemyLootDrop = GetComponent<EnemyLootDrop>();
+        currentHealth = maxHealth;
 
-        // Slider to show enemy health 
+        // Slider as enemy healthbar 
         enemyHealthBar.maxValue = maxHealth;
         damageTaken = 0;
         enemyHealthBar.fillRect.gameObject.SetActive(false);
@@ -40,9 +40,9 @@ public class EnemyHealthManager : MonoBehaviour
             }
             else if (gameObject.CompareTag("Boss"))
             {
-                enemyLootDrop.DropLoot(); 
+                // Boss drops different powerups when killed 
+                enemyLootDrop.DropPowerup(); 
             }
-
             Destroy(gameObject); 
         }
     }
@@ -51,8 +51,10 @@ public class EnemyHealthManager : MonoBehaviour
     public void HurtEnemyHealthBar(int amount)
     {
         damageTaken += amount;
-        enemyHealthBar.fillRect.gameObject.SetActive(true);
-        enemyHealthBar.value = damageTaken;
+        if (damageTaken > 0 && currentHealth < maxHealth)
+        {
+            enemyHealthBar.fillRect.gameObject.SetActive(true);
+            enemyHealthBar.value = damageTaken;
+        }
     }
-
 }

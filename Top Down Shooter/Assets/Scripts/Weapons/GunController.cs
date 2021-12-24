@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class GunController : MonoBehaviour
 {
-    private WeaponsInventory weaponsInventory; 
+    private WeaponsInventory weaponsInventory;
+    private int weaponIndex = 1;
     public bool isFiring = false;
-    private int weaponIndex = 1; 
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +25,6 @@ public class GunController : MonoBehaviour
                 SetWeaponIndex(3); 
             }
             else weaponIndex--;
-
         }
         else if (Input.GetKeyDown(KeyCode.E))
         {

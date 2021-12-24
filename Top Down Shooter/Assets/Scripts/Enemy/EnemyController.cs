@@ -5,8 +5,10 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     private Rigidbody enemyRB;
-    private float moveSpeed = 5f;  
     private PlayerController player;
+
+    private float moveSpeed = 5f;  
+    private float playingAreaLimit = 170;
 
     // Start is called before the first frame update 
     void Start()
@@ -20,6 +22,12 @@ public class EnemyController : MonoBehaviour
     {
         // Enemy to follow player 
         transform.LookAt(player.transform.position);
-        transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime); 
+        transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+
+        // Destroy enemy if it is knocked out of playing area 
+        if (transform.position.x > playingAreaLimit || transform.position.x < -playingAreaLimit || transform.position.z > playingAreaLimit || transform.position.z < -playingAreaLimit)
+        {
+            Destroy(gameObject);
+        }
     }
 }

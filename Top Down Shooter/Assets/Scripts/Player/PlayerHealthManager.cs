@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerHealthManager : MonoBehaviour
 {
+    // Slider stats 
     public Slider playerHealthBar; 
     private int maxHealth = 10;
     private int currentHealth; 
@@ -12,6 +13,7 @@ public class PlayerHealthManager : MonoBehaviour
 
     private int healthRecovered = 2; 
     
+    // Player flashing stats 
     private Renderer rend;
     private Color storedColour;
     private float flashLength = 0.25f; 

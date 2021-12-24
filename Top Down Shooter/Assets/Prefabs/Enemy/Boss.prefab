@@ -16265,9 +16265,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfc8f4338addc6044a7f6b0984f94175, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickupPrefabs:
-  - {fileID: 1271703188315874194, guid: 8198eb3597d0811438f13bc06a7b4461, type: 3}
-  powerupPrefabs: []
+  pickupPrefabs: []
+  powerupPrefabs:
+  - {fileID: 5287638567813466372, guid: 7dbe3b5df84261342af8a731fc068e3e, type: 3}
+  - {fileID: 5869699957202948325, guid: 931d779cdf3de62499357e45a7e40222, type: 3}
 --- !u!1 &5363672830004217667
 GameObject:
   m_ObjectHideFlags: 0

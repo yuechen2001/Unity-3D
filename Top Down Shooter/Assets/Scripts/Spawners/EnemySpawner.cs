@@ -17,8 +17,7 @@ public class EnemySpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SpawnEnemyWave(waveNumber);
-        SpawnBoss(); 
+        SpawnEnemyWave(waveNumber + 9);
     }
 
     // Update is called once per frame
@@ -95,7 +94,7 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    // Spawn enemies in waves 
+    // Spawn enemy wave
     private void SpawnEnemyWave(int enemiesToSpawn)
     {
     for (int i = 0; i < enemiesToSpawn; i++)
@@ -105,7 +104,7 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    // Spawn boss wave 
+    // Spawn boss
     private void SpawnBoss()
     {
         var boss = Instantiate(bossPrefab, GenerateSpawnPosition(true), bossPrefab.transform.rotation); 
