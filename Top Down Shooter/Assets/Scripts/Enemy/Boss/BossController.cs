@@ -6,6 +6,7 @@ public class BossController : MonoBehaviour
 {
     private Rigidbody bossRB;
     private PlayerController player;
+    private AudioManager audioManager; 
     public GameObject bossOrb;
     public Transform orbSpawnPoint;
 
@@ -21,6 +22,8 @@ public class BossController : MonoBehaviour
     void Start()
     {
         player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+        audioManager = FindObjectOfType<AudioManager>();
+        audioManager.PlaySound("Boss Cry");
     }
 
     // Update is called once per frame

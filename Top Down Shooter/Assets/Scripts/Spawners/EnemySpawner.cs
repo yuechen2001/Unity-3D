@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     private MessageBoxController messageBoxController;
+    private AudioManager audioManager; 
     public GameObject[] enemyPrefabs;
     public GameObject bossPrefab;
 
@@ -19,6 +20,7 @@ public class EnemySpawner : MonoBehaviour
     void Start()
     {
         messageBoxController = GameObject.FindWithTag("Display Manager").GetComponent<MessageBoxController>();
+        audioManager = FindObjectOfType<AudioManager>(); 
         SpawnEnemyWave(waveNumber * 2);
     }
 
@@ -99,7 +101,8 @@ public class EnemySpawner : MonoBehaviour
     // Spawn enemy wave
     private void SpawnEnemyWave(int enemiesToSpawn)
     {
-        messageBoxController.DisplayWaveNumber(); 
+        messageBoxController.DisplayWaveNumber();
+        audioManager.PlaySound("Next Wave"); 
         for (int i = 0; i < enemiesToSpawn; i++)
         {
             int randomEnemy = Random.Range(0, enemyPrefabs.Length);

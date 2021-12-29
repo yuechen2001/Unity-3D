@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class HealthPickupController : MonoBehaviour
 {
-    private PlayerHealthManager playerHealth; 
+    private PlayerHealthManager playerHealth;
+    private AudioManager audioManager; 
 
     // Start is called before the first frame update
     void Start()
     {
-        playerHealth = GameObject.FindWithTag("Player").GetComponent<PlayerHealthManager>(); 
+        playerHealth = GameObject.FindWithTag("Player").GetComponent<PlayerHealthManager>();
+        audioManager = FindObjectOfType<AudioManager>();
     }
 
     // Update is called once per frame
@@ -31,6 +33,7 @@ public class HealthPickupController : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             playerHealth.RecoverHealth();
+            audioManager.PlaySound("Heal"); 
             Destroy(gameObject); 
         }
     }

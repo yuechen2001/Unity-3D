@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody playerRb;
     private GunController gun;
     private MessageBoxController messageBoxController;
+    private AudioManager audioManager;
 
     // Particles 
     public ParticleSystem smashParticles;
@@ -38,6 +39,7 @@ public class PlayerController : MonoBehaviour
     {
         playerRb = GetComponent<Rigidbody>(); 
         gun = GameObject.FindWithTag("Gun").GetComponent<GunController>();
+        audioManager = FindObjectOfType<AudioManager>();
         messageBoxController = GameObject.FindWithTag("Display Manager").GetComponent<MessageBoxController>();
     }
 
@@ -76,7 +78,8 @@ public class PlayerController : MonoBehaviour
         // If player has powerup, allow player to use powerup upon button press
         if (currentPowerup == PowerUpType.Rockets && Input.GetKeyDown(KeyCode.F))
         {
-            rocketParticles.Play(); 
+            rocketParticles.Play();
+            audioManager.PlaySound("Rockets");
             LaunchRockets();
         }
 
@@ -94,6 +97,7 @@ public class PlayerController : MonoBehaviour
         {
             currentPowerup = other.gameObject.GetComponent<PowerUp>().powerUpType;
             messageBoxController.DisplayPowerupObtained(currentPowerup.ToString());
+            audioManager.PlaySound("Pickup");
             Destroy(other.gameObject);
             powerupIndicator.gameObject.SetActive(true); 
         }
@@ -173,6 +177,7 @@ public class PlayerController : MonoBehaviour
         }
 
         smashParticles.Play();
+        audioManager.PlaySound("Smash"); 
 
         for (int i = 0; i < enemies.Length; i++)
         {

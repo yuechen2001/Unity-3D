@@ -5,8 +5,9 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     public Sound[] sounds; 
+
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         // Allow Audio Manager to be the only AudioSource for all sounds in game 
         foreach(Sound s in sounds)
@@ -16,8 +17,7 @@ public class AudioManager : MonoBehaviour
             s.source.loop = s.loop;
         }
 
-        PlaySound("Background Music");
-        PlaySound("Car Engine");
+        PlaySound("BGM");
     }
 
     public void PlaySound(string name)

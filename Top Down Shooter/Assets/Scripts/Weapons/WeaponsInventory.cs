@@ -7,6 +7,7 @@ public class WeaponsInventory : MonoBehaviour
     public GameObject bullet;
     public Transform firePoint;
     public ParticleSystem muzzleFlash;
+    private AudioManager audioManager; 
 
     // Weapon stats 
     public float bulletSpeed;
@@ -34,6 +35,7 @@ public class WeaponsInventory : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        audioManager = FindObjectOfType<AudioManager>();
         shotTimer += Time.deltaTime;
     }
 
@@ -48,7 +50,8 @@ public class WeaponsInventory : MonoBehaviour
         if (shotTimer > shotInterval)
         {
             shotTimer = 0;
-            var newBullet = SpawnBullet(); 
+            var newBullet = SpawnBullet();
+            audioManager.PlaySound("Pistol");
             StartCoroutine(RemoveBullet(pistolRange, newBullet)); 
         }
     }
@@ -67,6 +70,7 @@ public class WeaponsInventory : MonoBehaviour
             {
                 shotTimer = 0;
                 var newBullet = SpawnBullet();
+                audioManager.PlaySound("Pistol");
 
                 // Destroy bullet beyond weapon range. Account for ammo 
                 StartCoroutine(RemoveBullet(machineGunRange, newBullet));
@@ -100,7 +104,7 @@ public class WeaponsInventory : MonoBehaviour
                     StartCoroutine(RemoveBullet(shotgunRange, newBullet));
                     initialRotation += 10;
                 }
-
+                audioManager.PlaySound("Shotgun");
                 // Account for ammo 
                 shotgunAmmo--;
                 Debug.Log("Rounds: " + shotgunAmmo);

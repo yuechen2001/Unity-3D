@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class EnemyHealthManager : MonoBehaviour
 {
     private EnemyLootDrop enemyLootDrop;
+    private AudioManager audioManager; 
     public ParticleSystem bloodSplurt; 
 
     // Enemy healthbar stats 
@@ -18,6 +19,7 @@ public class EnemyHealthManager : MonoBehaviour
     void Start()
     {
         enemyLootDrop = GetComponent<EnemyLootDrop>();
+        audioManager = FindObjectOfType<AudioManager>(); 
         currentHealth = maxHealth;
 
         // Slider as enemy healthbar 
@@ -29,7 +31,8 @@ public class EnemyHealthManager : MonoBehaviour
     // Allow player to deal damage with weapons. Destroy enemy if no more health 
     public void HurtEnemy(int damage)
     {
-        currentHealth -= damage; 
+        currentHealth -= damage;
+        audioManager.PlaySound("Damage");
         HurtEnemyHealthBar(damage);
         bloodSplurt.Play(); 
 

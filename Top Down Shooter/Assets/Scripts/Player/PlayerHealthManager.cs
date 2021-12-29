@@ -16,7 +16,8 @@ public class PlayerHealthManager : MonoBehaviour
     // Player take damage 
     private Renderer rend;
     private Color storedColour;
-    public ParticleSystem bloodSplurt; 
+    public ParticleSystem bloodSplurt;
+    private AudioManager audioManager;
 
     private float flashLength = 0.25f; 
     private float flashTimer;
@@ -25,7 +26,8 @@ public class PlayerHealthManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        currentHealth = maxHealth; 
+        currentHealth = maxHealth;
+        audioManager = FindObjectOfType<AudioManager>();
 
         // Slider to show player health
         playerHealthBar.maxValue = maxHealth;
@@ -55,6 +57,7 @@ public class PlayerHealthManager : MonoBehaviour
     public void HurtPlayer(int damage)
     {
         currentHealth -= damage;
+        audioManager.PlaySound("Damage");
         HurtPlayerHealthBar(damage); 
 
         // Player flashes when taking damage
