@@ -6,6 +6,7 @@ public class WeaponsInventory : MonoBehaviour
 {
     public GameObject bullet;
     public Transform firePoint;
+    public ParticleSystem muzzleFlash;
 
     // Weapon stats 
     public float bulletSpeed;
@@ -18,11 +19,11 @@ public class WeaponsInventory : MonoBehaviour
     private float machineGunRange = 2; 
 
     // Weapon magazine size
-    private float shotgunAmmo = 50;
-    private float machineGunAmmo = 200; 
+    public float shotgunAmmo = 50;
+    public float machineGunAmmo = 200; 
 
     // Number of pellets per shotgun burst
-    private int pelletsPerBurst = 6; 
+    private int pelletsPerBurst = 4; 
 
     // Start is called before the first frame update
     void Start()
@@ -47,8 +48,8 @@ public class WeaponsInventory : MonoBehaviour
         if (shotTimer > shotInterval)
         {
             shotTimer = 0;
-            GameObject newBullet = Instantiate(bullet, firePoint.position, firePoint.rotation);
-            Destroy(newBullet, pistolRange);
+            var newBullet = SpawnBullet(); 
+            StartCoroutine(RemoveBullet(pistolRange, newBullet)); 
         }
     }
 
@@ -65,10 +66,10 @@ public class WeaponsInventory : MonoBehaviour
             if (shotTimer > shotInterval)
             {
                 shotTimer = 0;
-                GameObject newBullet = Instantiate(bullet, firePoint.position, firePoint.rotation);
+                var newBullet = SpawnBullet();
 
                 // Destroy bullet beyond weapon range. Account for ammo 
-                Destroy(newBullet, machineGunRange);
+                StartCoroutine(RemoveBullet(machineGunRange, newBullet));
                 machineGunAmmo--;
                 Debug.Log("Rounds: " + machineGunAmmo);
 
@@ -80,7 +81,7 @@ public class WeaponsInventory : MonoBehaviour
     public void FireShotgun()
     {
         // Set weapon stats 
-        shotInterval = 1.0f;
+        shotInterval = 2.0f;
         bulletSpeed = 200f;
 
         // Allow player to fire shotgun at regular intervals, when there is ammo
@@ -89,14 +90,14 @@ public class WeaponsInventory : MonoBehaviour
             if (shotTimer > shotInterval)
             {
                 shotTimer = 0;
-                int initialRotation = -30;
+                int initialRotation = -20;
                 for (int i = 0; i < pelletsPerBurst; i++)
                 {
-                    GameObject newBullet = Instantiate(bullet, firePoint.position, firePoint.rotation);
+                    var newBullet = SpawnBullet();
                     newBullet.transform.Rotate(new Vector3(newBullet.transform.rotation.x, initialRotation, newBullet.transform.rotation.z));
-                    
+
                     // Destroy pellets beyond shot
-                    Destroy(newBullet, shotgunRange);
+                    StartCoroutine(RemoveBullet(shotgunRange, newBullet));
                     initialRotation += 10;
                 }
 
@@ -106,6 +107,27 @@ public class WeaponsInventory : MonoBehaviour
 
             }
         }
+    }
+
+    // Spawn bullet using object pooling 
+    private GameObject SpawnBullet()
+    {
+        GameObject bullet = ObjectPool.SharedInstance.GetPooledObject();
+        if (bullet != null)
+        {
+            bullet.transform.position = firePoint.transform.position;
+            bullet.transform.rotation = firePoint.transform.rotation; 
+            bullet.SetActive(true);
+            muzzleFlash.Play();
+        }
+        return bullet; 
+    }
+
+    // Un-spawn bullet after max range 
+    public IEnumerator RemoveBullet(float range, GameObject bullet)
+    {
+        yield return new WaitForSeconds(range);
+        bullet.SetActive(false);
     }
 
     // Refill ammo after picking up ammo boxes 

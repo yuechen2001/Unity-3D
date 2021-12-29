@@ -5,9 +5,10 @@ using UnityEngine;
 public class OrbMovement : MonoBehaviour
 {
     private GameObject player;
-    private GameObject boss; 
+    private GameObject boss;
     private Rigidbody playerRb;
-    private Rigidbody orbRb; 
+    private Rigidbody orbRb;
+    public ParticleSystem explosionParticles; 
 
     // Orb stats 
     private float speed = 20.0f;
@@ -19,12 +20,12 @@ public class OrbMovement : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        boss = GameObject.FindGameObjectWithTag("Boss"); 
+        boss = GameObject.FindGameObjectWithTag("Boss");
         playerRb = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody>();
         orbRb = GameObject.FindGameObjectWithTag("Boss Orb").GetComponent<Rigidbody>();
 
         // Destroy orb after a certain distance 
-        Destroy(gameObject, orbLifespan); 
+        Destroy(gameObject, orbLifespan);
     }
 
     // Update is called once per frame
@@ -33,7 +34,7 @@ public class OrbMovement : MonoBehaviour
         // Orb travels towards the direction the boss is facing 
         if (boss == null)
         {
-            Destroy(gameObject); 
+            Destroy(gameObject);
         }
         else
         {
@@ -54,14 +55,16 @@ public class OrbMovement : MonoBehaviour
         {
             collision.gameObject.GetComponent<PlayerHealthManager>().HurtPlayer(damageToGive);
             playerRb.AddForce(Vector3.forward * explosiveForce, ForceMode.Impulse);
-            Destroy(gameObject);
+            explosionParticles.Play(); 
+            Destroy(gameObject, 0.1f);
         }
 
         if (collision.gameObject.CompareTag("Enemy"))
         {
             collision.gameObject.GetComponent<EnemyHealthManager>().HurtEnemy(damageToGive);
             playerRb.AddForce(Vector3.forward * explosiveForce, ForceMode.Impulse);
-            Destroy(gameObject);
+            explosionParticles.Play(); 
+            Destroy(gameObject, 0.1f);
         }
     }
 }

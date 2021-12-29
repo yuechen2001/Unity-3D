@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class AmmoBoxController : MonoBehaviour
 {
-    private WeaponsInventory weaponsInventory; 
+    private WeaponsInventory weaponsInventory;
+    private MessageBoxController messageBoxController;
 
     // Start is called before the first frame update
     void Start()
     {
-        weaponsInventory = GameObject.FindWithTag("Gun").GetComponent<WeaponsInventory>();  
+        weaponsInventory = GameObject.FindWithTag("Gun").GetComponent<WeaponsInventory>();
+        messageBoxController = GameObject.FindWithTag("Spawn Manager").GetComponent<MessageBoxController>();
     }
 
     // Update is called once per frame
@@ -31,10 +33,12 @@ public class AmmoBoxController : MonoBehaviour
         if (gameObject.CompareTag("Shotgun Ammo"))
         {
             weaponsInventory.ResupplyAmmo("Shotgun");
+            messageBoxController.DisplayAmmoRefill(gameObject.tag); 
         }
         else if (gameObject.CompareTag("Machine Gun Ammo"))
         {
             weaponsInventory.ResupplyAmmo("Machine Gun");
+            messageBoxController.DisplayAmmoRefill(gameObject.tag);
         }
 
         // Destroy ammo box after collision

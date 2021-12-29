@@ -23,7 +23,7 @@ public class EnemyController : MonoBehaviour
         // Enemy to follow player 
         transform.LookAt(player.transform.position);
         transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
-
+    
         // Destroy enemy if it is knocked out of playing area 
         if (transform.position.x > playingAreaLimit || transform.position.x < -playingAreaLimit || transform.position.z > playingAreaLimit || transform.position.z < -playingAreaLimit)
         {

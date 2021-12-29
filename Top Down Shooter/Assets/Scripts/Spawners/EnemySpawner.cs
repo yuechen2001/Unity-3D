@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
+    private MessageBoxController messageBoxController;
     public GameObject[] enemyPrefabs;
     public GameObject bossPrefab;
 
-    private int bossRound = 5;
     private int enemyCount; 
-    private int waveNumber = 4;
+    public int waveNumber = 1;
+    public int bossRound = 5;
 
     private float bossYOffset = 5;
     private float enemyYOffset = 2; 
@@ -17,7 +18,8 @@ public class EnemySpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SpawnEnemyWave(waveNumber + 9);
+        messageBoxController = GameObject.FindWithTag("Display Manager").GetComponent<MessageBoxController>();
+        SpawnEnemyWave(waveNumber * 2);
     }
 
     // Update is called once per frame
@@ -34,11 +36,11 @@ public class EnemySpawner : MonoBehaviour
             if (waveNumber % bossRound == 0)
             {
                 SpawnBoss();
-                SpawnEnemyWave(waveNumber + 9); 
+                SpawnEnemyWave(waveNumber * 2);
             }
             else
             {
-                SpawnEnemyWave(waveNumber + 9);
+                SpawnEnemyWave(waveNumber * 2);
             }
         }
     }
@@ -97,10 +99,11 @@ public class EnemySpawner : MonoBehaviour
     // Spawn enemy wave
     private void SpawnEnemyWave(int enemiesToSpawn)
     {
-    for (int i = 0; i < enemiesToSpawn; i++)
+        messageBoxController.DisplayWaveNumber(); 
+        for (int i = 0; i < enemiesToSpawn; i++)
         {
             int randomEnemy = Random.Range(0, enemyPrefabs.Length);
-            var enemy = Instantiate(enemyPrefabs[randomEnemy], GenerateSpawnPosition(false), enemyPrefabs[randomEnemy].transform.rotation); 
+            var enemy = Instantiate(enemyPrefabs[randomEnemy], GenerateSpawnPosition(false), enemyPrefabs[randomEnemy].transform.rotation);
         }
     }
 

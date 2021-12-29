@@ -13,9 +13,11 @@ public class PlayerHealthManager : MonoBehaviour
 
     private int healthRecovered = 2; 
     
-    // Player flashing stats 
+    // Player take damage 
     private Renderer rend;
     private Color storedColour;
+    public ParticleSystem bloodSplurt; 
+
     private float flashLength = 0.25f; 
     private float flashTimer;
 
@@ -57,6 +59,7 @@ public class PlayerHealthManager : MonoBehaviour
 
         // Player flashes when taking damage
         flashTimer = flashLength;
+        bloodSplurt.Play(); 
         rend.material.SetColor("_Color", Color.white);
     }
 

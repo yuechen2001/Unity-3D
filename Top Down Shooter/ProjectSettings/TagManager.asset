@@ -4,15 +4,19 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - Shootable
+  - Boss Orb
   - Gun
+  - Undefined
+  - Enemy
   - Shotgun Ammo
   - Machine Gun Ammo
-  - Enemy
-  - Bullet
-  - Ground
-  - Boss
-  - Boss Orb
   - Powerup
+  - Boss
+  - Ground
+  - Bullet
+  - Spawn Manager
+  - Display Manager
   layers:
   - Default
   - TransparentFX
@@ -22,9 +26,9 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
+  - Lighting
+  - Ground
+  - Postprocessing
   - 
   - 
   - 

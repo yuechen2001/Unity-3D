@@ -5,9 +5,11 @@ using UnityEngine;
 public class RocketBehaviour : MonoBehaviour
 {
     private Transform target;
+    public ParticleSystem impactParticles;
+
     private float speed = 50.0f;
     private bool homing;
-    private float rocketStrength = 10.0f;
+    private float rocketStrength = 20.0f;
     private int rocketDamage = 3; 
 
     // Start is called before the first frame update 
@@ -48,10 +50,14 @@ public class RocketBehaviour : MonoBehaviour
 
                 // Get enemy's health manager and deal damage to enemy 
                 EnemyHealthManager enemyHealthManager = collision.gameObject.GetComponent<EnemyHealthManager>(); 
-                enemyHealthManager.HurtEnemy(rocketDamage); 
-
+                enemyHealthManager.HurtEnemy(rocketDamage);
+                if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Boss"))
+                {
+                    impactParticles.Play();
+                }
+                
                 // Destroy rocket once collision is over 
-                Destroy(gameObject);
+                Destroy(gameObject, 0.1f);
             }
         }
     }

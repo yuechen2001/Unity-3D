@@ -9,9 +9,15 @@ public class PlayerController : MonoBehaviour
     public Camera mainCamera;
     private Rigidbody playerRb;
     private GunController gun;
+    private MessageBoxController messageBoxController;
+
+    // Particles 
+    public ParticleSystem smashParticles;
+    public ParticleSystem rocketParticles;
 
     // Rocket powerup 
     public GameObject rocketPrefab;
+    public Transform rocketSpawnpoint; 
     private GameObject tmpRocket;
 
     // Smash powerup 
@@ -32,6 +38,7 @@ public class PlayerController : MonoBehaviour
     {
         playerRb = GetComponent<Rigidbody>(); 
         gun = GameObject.FindWithTag("Gun").GetComponent<GunController>();
+        messageBoxController = GameObject.FindWithTag("Display Manager").GetComponent<MessageBoxController>();
     }
 
     // Update is called once per frame
@@ -69,13 +76,14 @@ public class PlayerController : MonoBehaviour
         // If player has powerup, allow player to use powerup upon button press
         if (currentPowerup == PowerUpType.Rockets && Input.GetKeyDown(KeyCode.F))
         {
+            rocketParticles.Play(); 
             LaunchRockets();
         }
 
         if (currentPowerup == PowerUpType.Smash && Input.GetKeyDown(KeyCode.Space) && !smashing)
         {
             smashing = true;
-            StartCoroutine(Smash()); 
+            StartCoroutine(Smash());
         }
     }
 
@@ -85,6 +93,7 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("Powerup"))
         {
             currentPowerup = other.gameObject.GetComponent<PowerUp>().powerUpType;
+            messageBoxController.DisplayPowerupObtained(currentPowerup.ToString());
             Destroy(other.gameObject);
             powerupIndicator.gameObject.SetActive(true); 
         }
@@ -124,7 +133,7 @@ public class PlayerController : MonoBehaviour
         // Fire at enemies 
         foreach(var enemy in GameObject.FindGameObjectsWithTag("Enemy"))
         {
-            tmpRocket = Instantiate(rocketPrefab, transform.position, rocketPrefab.transform.rotation);
+            tmpRocket = Instantiate(rocketPrefab, rocketSpawnpoint.position, rocketPrefab.transform.rotation);
             tmpRocket.GetComponent<RocketBehaviour>().Fire(enemy.transform);
         }
         
@@ -162,6 +171,8 @@ public class PlayerController : MonoBehaviour
             playerRb.velocity = new Vector3(playerRb.velocity.x, -smashSpeed * 2, 0);
             yield return null;
         }
+
+        smashParticles.Play();
 
         for (int i = 0; i < enemies.Length; i++)
         {

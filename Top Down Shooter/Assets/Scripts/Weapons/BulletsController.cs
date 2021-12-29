@@ -28,7 +28,7 @@ public class BulletsController : MonoBehaviour
         if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Boss"))
         {
             collision.gameObject.GetComponent<EnemyHealthManager>().HurtEnemy(bulletDamage);
-            Destroy(gameObject); 
+            gameObject.SetActive(false); 
         }
     }
 }

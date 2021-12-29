@@ -5,7 +5,7 @@ using UnityEngine;
 public class GunController : MonoBehaviour
 {
     private WeaponsInventory weaponsInventory;
-    private int weaponIndex = 1;
+    public int weaponIndex = 1;
     public bool isFiring = false;
 
     // Start is called before the first frame update

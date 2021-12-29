@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class EnemyHealthManager : MonoBehaviour
 {
     private EnemyLootDrop enemyLootDrop;
+    public ParticleSystem bloodSplurt; 
 
     // Enemy healthbar stats 
     public Slider enemyHealthBar;
@@ -30,6 +31,7 @@ public class EnemyHealthManager : MonoBehaviour
     {
         currentHealth -= damage; 
         HurtEnemyHealthBar(damage);
+        bloodSplurt.Play(); 
 
         if (damageTaken >= maxHealth)
         {
