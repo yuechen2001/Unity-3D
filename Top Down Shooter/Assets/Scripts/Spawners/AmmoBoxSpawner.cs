@@ -5,6 +5,7 @@ using UnityEngine;
 public class AmmoBoxSpawner : MonoBehaviour
 {
     public GameObject[] ammoPrefabs;
+
     private float spawnTimer;
     private float spawnInterval = 60; 
 

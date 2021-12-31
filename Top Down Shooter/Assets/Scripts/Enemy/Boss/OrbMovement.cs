@@ -7,6 +7,7 @@ public class OrbMovement : MonoBehaviour
     private GameObject player;
     private GameObject boss;
     private Rigidbody playerRb;
+    private Rigidbody enemyRb;
     private Rigidbody orbRb;
     public ParticleSystem explosionParticles; 
 
@@ -51,6 +52,7 @@ public class OrbMovement : MonoBehaviour
             Destroy(gameObject);
         }
 
+        // If orb hits player or enemy, deal damage and pushback
         if (collision.gameObject.CompareTag("Player"))
         {
             collision.gameObject.GetComponent<PlayerHealthManager>().HurtPlayer(damageToGive);
@@ -61,8 +63,9 @@ public class OrbMovement : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Enemy"))
         {
+            enemyRb = collision.gameObject.GetComponent<Rigidbody>();
             collision.gameObject.GetComponent<EnemyHealthManager>().HurtEnemy(damageToGive);
-            playerRb.AddForce(Vector3.forward * explosiveForce, ForceMode.Impulse);
+            enemyRb.AddForce(Vector3.forward * explosiveForce, ForceMode.Impulse);
             explosionParticles.Play(); 
             Destroy(gameObject, 0.1f);
         }

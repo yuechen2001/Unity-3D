@@ -22,6 +22,7 @@ public class MessageBoxController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Display content for a period of time before deactivating message box
         if (displayBox.gameObject.activeInHierarchy)
         {
             // Reset timer if new display pops up 
@@ -62,7 +63,7 @@ public class MessageBoxController : MonoBehaviour
         displayBox.text = ammoType + " refilled!"; 
     }
 
-    // Display power up obtained when player picks up power up 
+    // Display type of power up obtained when player picks up power up 
     public void DisplayPowerupObtained(string powerupType)
     {
         isResetTimer = true;

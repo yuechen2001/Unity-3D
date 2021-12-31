@@ -5,6 +5,7 @@ using UnityEngine;
 public class GunController : MonoBehaviour
 {
     private WeaponsInventory weaponsInventory;
+
     public int weaponIndex = 1;
     public bool isFiring = false;
 

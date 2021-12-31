@@ -5,12 +5,13 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public PowerUpType currentPowerup = PowerUpType.None;
-    public GameObject powerupIndicator;
-    public Camera mainCamera;
+
     private Rigidbody playerRb;
     private GunController gun;
     private MessageBoxController messageBoxController;
     private AudioManager audioManager;
+    public GameObject powerupIndicator;
+    public Camera mainCamera;
 
     // Particles 
     public ParticleSystem smashParticles;
@@ -37,9 +38,9 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerRb = GetComponent<Rigidbody>(); 
-        gun = GameObject.FindWithTag("Gun").GetComponent<GunController>();
+        playerRb = GetComponent<Rigidbody>();
         audioManager = FindObjectOfType<AudioManager>();
+        gun = GameObject.FindWithTag("Gun").GetComponent<GunController>();
         messageBoxController = GameObject.FindWithTag("Display Manager").GetComponent<MessageBoxController>();
     }
 
@@ -151,6 +152,7 @@ public class PlayerController : MonoBehaviour
         RemovePowerupStatus(); 
     }
 
+    // Smash the ground, dealing damage and knockback enemies in range
     IEnumerator Smash()
     {
         var enemies = GameObject.FindGameObjectsWithTag("Enemy"); 

@@ -17,6 +17,7 @@ TagManager:
   - Bullet
   - Spawn Manager
   - Display Manager
+  - Instructions
   layers:
   - Default
   - TransparentFX

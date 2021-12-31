@@ -7,6 +7,8 @@ public class EnemyLootDrop : MonoBehaviour
     public GameObject[] pickupPrefabs;
     public GameObject[] powerupPrefabs;
 
+    private float lootYOffset = 2.0f; 
+
     // If enemy is killed, 25% chance to drop health pickups
     public void DropLoot()
     {
@@ -22,6 +24,6 @@ public class EnemyLootDrop : MonoBehaviour
     public void DropPowerup()
     {
         int random = Random.Range(0, powerupPrefabs.Length);
-        Instantiate(powerupPrefabs[random], transform.position, powerupPrefabs[random].transform.rotation);
+        Instantiate(powerupPrefabs[random], new Vector3(transform.position.x, lootYOffset, transform.position.z), powerupPrefabs[random].transform.rotation);
     }
 }

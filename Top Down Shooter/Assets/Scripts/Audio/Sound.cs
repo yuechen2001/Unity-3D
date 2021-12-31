@@ -5,10 +5,10 @@ using UnityEngine;
 [System.Serializable]
 public class Sound
 {
+    public AudioSource source;
+    public AudioClip clip;
+
     public string name; 
-    public AudioClip clip; 
-    public float volume; 
-    
+    public float volume;    
     public bool loop;
-    public AudioSource source; 
 }

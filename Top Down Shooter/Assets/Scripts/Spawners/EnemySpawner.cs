@@ -20,7 +20,7 @@ public class EnemySpawner : MonoBehaviour
     void Start()
     {
         messageBoxController = GameObject.FindWithTag("Display Manager").GetComponent<MessageBoxController>();
-        audioManager = FindObjectOfType<AudioManager>(); 
+        audioManager = FindObjectOfType<AudioManager>();
         SpawnEnemyWave(waveNumber * 2);
     }
 

@@ -5,6 +5,7 @@ using UnityEngine;
 public class BulletsController : MonoBehaviour
 {
     public WeaponsInventory inventory;
+
     public float bulletSpeed;
     public float bulletRange;
     public int bulletDamage = 1; 

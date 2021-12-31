@@ -32,8 +32,8 @@ public class EnemyHealthManager : MonoBehaviour
     public void HurtEnemy(int damage)
     {
         currentHealth -= damage;
-        audioManager.PlaySound("Damage");
         HurtEnemyHealthBar(damage);
+        audioManager.PlaySound("Damage");
         bloodSplurt.Play(); 
 
         if (damageTaken >= maxHealth)

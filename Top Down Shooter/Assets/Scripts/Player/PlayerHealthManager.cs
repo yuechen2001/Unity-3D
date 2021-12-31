@@ -5,29 +5,30 @@ using UnityEngine.UI;
 
 public class PlayerHealthManager : MonoBehaviour
 {
+    private GameManager gameManager; 
+
     // Slider stats 
     public Slider playerHealthBar; 
     private int maxHealth = 10;
     private int currentHealth; 
     private int damageTaken;
+    private int healthRecovered = 2;
 
-    private int healthRecovered = 2; 
-    
     // Player take damage 
-    private Renderer rend;
     private Color storedColour;
-    public ParticleSystem bloodSplurt;
+    private Renderer rend;
     private AudioManager audioManager;
+    public ParticleSystem bloodSplurt;
 
     private float flashLength = 0.25f; 
     private float flashTimer;
-
 
     // Start is called before the first frame update
     void Start()
     {
         currentHealth = maxHealth;
         audioManager = FindObjectOfType<AudioManager>();
+        gameManager = FindObjectOfType<GameManager>(); 
 
         // Slider to show player health
         playerHealthBar.maxValue = maxHealth;
@@ -57,8 +58,8 @@ public class PlayerHealthManager : MonoBehaviour
     public void HurtPlayer(int damage)
     {
         currentHealth -= damage;
+        HurtPlayerHealthBar(damage);
         audioManager.PlaySound("Damage");
-        HurtPlayerHealthBar(damage); 
 
         // Player flashes when taking damage
         flashTimer = flashLength;
@@ -75,7 +76,8 @@ public class PlayerHealthManager : MonoBehaviour
 
         if (damageTaken >= maxHealth)
         {
-            gameObject.SetActive(false); 
+            gameObject.SetActive(false);
+            gameManager.isGameOver = true; 
         }
     }
     

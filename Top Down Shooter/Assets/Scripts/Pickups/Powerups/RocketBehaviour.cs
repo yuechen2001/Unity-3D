@@ -8,8 +8,8 @@ public class RocketBehaviour : MonoBehaviour
     public ParticleSystem impactParticles;
 
     private float speed = 50.0f;
-    private bool homing;
     private float rocketStrength = 20.0f;
+    private bool homing;
     private int rocketDamage = 3; 
 
     // Start is called before the first frame update 
