@@ -7,7 +7,7 @@ Welcome to my Unity 3D portfolio - a creative playground of game prototypes, des
 
 ## 📖 About The Project
 
-This is a curated collection of Unity 3D games I've developed as part of my learning journey and creative exploration. Each project showcases different aspects of gameplay mechanics — from fast-paced shooters to classic arcade-style challenges.
+This is a curated collection of Unity 3D games I've developed as part of my learning journey and creative exploration. Each project showcases different aspects of gameplay mechanics - from fast-paced shooters to classic arcade-style challenges.
 
 Whether you're here to explore, playtest, or get inspired, I'm excited to share my work with you.
 
