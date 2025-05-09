@@ -13,19 +13,14 @@ Whether you're here to explore, playtest, or get inspired, I'm excited to share 
 
 ## 🕹️ Game Library
 
-Here's a full list of the games you can play:
+Here's a full list of my favourites:
 
 - 🔫 **Top Down Shooter** – Fast-paced combat from a bird’s-eye view.
 - 🍉 **Fruit Ninja Prototype** – Slice your way through falling fruit with style.
-- 🧠 **Create With Code Challenge 5** – A unique challenge with interactive mechanics.
 - 🦶 **Platform Survival Prototype** – Jump, dodge, and survive in this dynamic test of reflexes.
 - 🏃 **Endless Runner Prototype** – Classic side-scroller with infinite fun.
-- 🎯 **Create With Code Challenge 3** – Rapid prototyping meets creative problem-solving.
-- 🎲 **Create With Code Challenge 2** – A fresh take on input handling and player movement.
-- 🧩 **Create With Code Challenge 1** – Where the journey began.
 - 🚗 **2-Player Driving Prototype** – Race and collide in a local multiplayer driving battle.
 - 🌾 **Farm Shooter Prototype** – Defend your farm from pixelated invaders!
-- 💡 **Create With Code Challenge 4** – A culmination of early Unity learnings.
 - 🚘 **Endless Driving Game** – Hit the gas and never look back.
 
 > **🎮 Pro Tip**: All games are browser-friendly — no download needed!
